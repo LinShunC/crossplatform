@@ -83,12 +83,12 @@ if (formType == FormType.login)
   String userID = await widget.auth.signIn(email, password);
   print("user ID is :"+ userID);
 
-   dialogBox.information(context, "Congraduations", "Sign in successfully.");
+  // dialogBox.information(context, "Congraduations", "Sign in successfully.");
 }
 else{
  String userID = await widget.auth.signUp(email, password);
   print("register user ID is :"+ userID);
-    dialogBox.information(context, "Congraduations", "Account created successfully.");
+    //dialogBox.information(context, "Congraduations", "Account created successfully.");
 
 }
 widget.onSignedIn();

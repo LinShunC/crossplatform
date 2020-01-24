@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Authentication.dart';
+import 'package:newapp/PhotoUpload.dart';
 
 
 
@@ -34,7 +35,7 @@ class home extends StatefulWidget
         print("error:"+e.toString());
       }
     }
-    void shoppingCart(){}
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -63,7 +64,16 @@ class home extends StatefulWidget
             new IconButton(
               icon: new Icon(Icons.shopping_cart),
               iconSize: 40,
-              color: Colors.white, onPressed: shoppingCart,
+              color: Colors.white, onPressed: ()
+              {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context)
+                  {
+                    return new UploadPhotoPage();
+                  })
+                  );
+              },
             ),
           ],
         ),
