@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'DialogBox.dart';
 import "package:http/http.dart" as http;
 import 'Authentication.dart';
 
@@ -31,6 +32,7 @@ class LoginRegiser extends StatefulWidget
    
    class LoginRegiserState extends State<LoginRegiser>
 {
+DialogBox dialogBox = new DialogBox();
 
   final formKey = new GlobalKey<FormState>();
   FormType formType = FormType.login;
@@ -81,11 +83,12 @@ if (formType == FormType.login)
   String userID = await widget.auth.signIn(email, password);
   print("user ID is :"+ userID);
 
-
+   dialogBox.information(context, "Congraduations", "Sign in successfully.");
 }
 else{
  String userID = await widget.auth.signUp(email, password);
   print("register user ID is :"+ userID);
+    dialogBox.information(context, "Congraduations", "Account created successfully.");
 
 }
 widget.onSignedIn();
@@ -93,6 +96,7 @@ widget.onSignedIn();
   {
 
     print("error:"+e.toString());
+    dialogBox.information(context, "Error :", e.toString());
   }
   
 }
