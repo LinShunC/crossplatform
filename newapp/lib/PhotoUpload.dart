@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import "package:intl/intl.dart";
 import 'package:image_picker/image_picker.dart';
 import "dart:io";
-
+import "package:http/http.dart" as http;
+import 'dart:async';
+import 'dart:convert';
 
 
 
@@ -40,6 +42,35 @@ class UploadPhotoPage extends StatefulWidget
       }
       else{
         return false;
+      }
+    }
+    void uploadStatusImage() async
+    {
+      if(validateAndSave())
+      {
+print(sampleImage);
+        var timekey =  new DateTime.now();
+        String url = 'http://localhost:3001/api/uploadImage/uploadImage';
+  Map<String, String> headers = {"Content-type": "application/json"};
+ String base64Image = base64Encode(sampleImage.readAsBytesSync());
+  String json = '{"Time": "$timekey" , "Image": "$base64Image"}';
+print(base64Image);
+  // make POST request
+  http.Response response = await http.post(url, headers: headers, body:json);
+Map <String, dynamic> user = jsonDecode(response.body);
+bool state = user['valid'];
+String UID = user['userid'];
+//print(UID);
+///print(state);
+if (state == false)
+{
+  print("error");
+}
+else{
+print('Howdy, ${user['valid']}!');
+}
+
+
       }
     }
   @override
@@ -90,7 +121,7 @@ children: <Widget>[
     elevation: 10.0,
     child: Text("Add a new post"),
     textColor: Colors.white,
-    color: Colors.lightBlue, onPressed: validateAndSave,
+    color: Colors.lightBlue, onPressed: uploadStatusImage,
   )
 ],
   ),
