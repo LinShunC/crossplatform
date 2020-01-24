@@ -49,12 +49,13 @@ class UploadPhotoPage extends StatefulWidget
       if(validateAndSave())
       {
 print(sampleImage);
-        var timekey =  new DateTime.now();
-        String url = 'http://localhost:3001/api/uploadImage/uploadImage';
+        String timekey =  new DateTime.now().toString()+".JPG"  ;
+        String url = 'http://localhost:3001/api/userValidation/uploadImage';
   Map<String, String> headers = {"Content-type": "application/json"};
  String base64Image = base64Encode(sampleImage.readAsBytesSync());
-  String json = '{"Time": "$timekey" , "Image": "$base64Image"}';
+  String json = '{"time": "$timekey" , "image": "asd"}';
 print(base64Image);
+print("timekey"+timekey);
   // make POST request
   http.Response response = await http.post(url, headers: headers, body:json);
 Map <String, dynamic> user = jsonDecode(response.body);
@@ -69,7 +70,15 @@ if (state == false)
 else{
 print('Howdy, ${user['valid']}!');
 }
-
+/*
+ http.post(phpEndPoint, body: {
+     "image": base64Image,
+     "name": fileName,
+   }).then((res) {
+     print(res.statusCode);
+   }).catchError((err) {
+     print(err);
+   }); */
 
       }
     }
